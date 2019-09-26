@@ -1,5 +1,5 @@
 #include "TAD_Produto.h"
-
+//Implementações feitas de acordo com o livro Projeto de Algoritmos de Nivio Ziviani.
 void InicializaProd(TLisprod *lisprod){
     lisprod->Primeiro = (Apontadorp)malloc(sizeof(TCelprod));
     lisprod->Ultimo = lisprod->Primeiro;

@@ -1,7 +1,7 @@
 #include "TAD_MatEsparca.h"
-int InicializaColuna(TLista *lista, int j) {
-    Apontador aux;
-    int next;
+int InicializaColuna(TLista *lista, int j) { //InicializaColuna se comporta como uma função em série,
+    Apontador aux;                          //já que ela insere várias Células cabeça a partir de uma célula cabeça
+    int next;                              //principal utilizando apontador direita para encadea-las.
     aux = lista->principal;
     for (next = 0; next < j; next++){
     aux->direita = (Apontador) malloc(sizeof(TCelula));
@@ -13,9 +13,9 @@ int InicializaColuna(TLista *lista, int j) {
     }
     return 1;
 }
-int InicializaLinha(TLista *lista, int i){
-    Apontador aux;
-    int next;
+int InicializaLinha(TLista *lista, int i){//InicializaLinha se comporta como uma função em série,
+    Apontador aux;                       //já que ela insere várias Células cabeça a partir de uma célula cabeça
+    int next;                           //principal utilizando apontador abaixo para encadea-las.
     aux = lista->principal;
     for (next = 0; next < i; ++next){
         aux->abaixo = (Apontador) malloc(sizeof(TCelula));
@@ -27,7 +27,7 @@ int InicializaLinha(TLista *lista, int i){
     }
     return 1;
 }
-int InicializaMatriz(TLista *lista){
+int InicializaMatriz(TLista *lista){     //Inicializa uma célula cabeça principal de linha e coluna -1.
     //Criação da célula cabeça principal
     lista->principal = (Apontador) malloc(sizeof(TCelula));
     lista->principal->direita = lista->principal;
@@ -38,8 +38,8 @@ int InicializaMatriz(TLista *lista){
     return 1;
 }
 
-void ImprimeMatrizC(TLista *lista, int j){
-    Apontador aux;
+void ImprimeMatrizC(TLista *lista, int j){ //Função para imprimir as células cabeça coluna.
+    Apontador aux;                         //Obs: função criada apenas para testes de confirmação.
     int next;
     aux = lista->principal->direita;
     for(next = 0; next < j; ++next){
@@ -50,8 +50,8 @@ void ImprimeMatrizC(TLista *lista, int j){
     }
 }
 
-void ImprimeMatrizL(TLista *lista, int i){
-    Apontador aux;
+void ImprimeMatrizL(TLista *lista, int i){ //Função para imprimir as células cabeça linha.
+    Apontador aux;                        //Obs: função criada apenas para testes de confirmação.
     int next;
     aux = lista->principal;
     for(next = 0; next < i+1; ++next){
@@ -72,7 +72,8 @@ void InsereMatriz(TLista *lista, int coluna, int linha,TProdutos *produtos){
     InicializaProd(&newcel->lisprod);
     Insere(&newcel->lisprod, produtos);
 
-    // percorre coluna
+    //Percorre coluna
+    //Localizamos primeiro a coluna correspondente à coluna da célula e inserimos na lista dessa coluna.
     aux = lista->principal->direita;
 
     for(next = 1; next < coluna; next++){
@@ -90,6 +91,7 @@ void InsereMatriz(TLista *lista, int coluna, int linha,TProdutos *produtos){
     aux->abaixo = newcel;
 
     //percorre linha
+    //Localizamos depois a linha correspondente para encadearmos a célula tanto na lista linha quanto coluna.
     aux = lista->principal->abaixo;
 
     for(next = 1; next < linha; next++){
@@ -151,6 +153,8 @@ void LeMatriz(FILE *ptr_arq, TLista *lista, int qtd_i, int qtd_j, TProdutos *pro
     } else {
         printf("Matriz não inicializada\n");
     }
+    //Percorre as linhas obtendo cliente e produto no primeiro while
+    //percorre as linhas obtendo e inserindo os valores de data e qtd de produto até que haja quebra de linha ou fim do arquivo
     while (!feof(ptr_arq)){
         fscanf(ptr_arq, "%d %d", &i, &j);
         caracter = fgetc(ptr_arq);
@@ -167,8 +171,8 @@ void LeMatriz(FILE *ptr_arq, TLista *lista, int qtd_i, int qtd_j, TProdutos *pro
     }
 }
 
-int qtdCompraporProduto(TLista *lista, int coluna){
-    int next, qtdcompra;
+int qtdCompraporProduto(TLista *lista, int coluna){ //Percorre a lista até o produto (coluna) desejado, e então com um
+    int next, qtdcompra;                           //contador vai somando a qtd de compras feitas naquela coluna.
     Apontador aux;
     Apontadorp pAux;
     qtdcompra = 0;
@@ -187,8 +191,8 @@ int qtdCompraporProduto(TLista *lista, int coluna){
 
     return qtdcompra;
 }
-int qtdCompraporCliente(TLista *lista, int linha){
-    int next, qtdcompra;
+int qtdCompraporCliente(TLista *lista, int linha){//Percorre a lista até o cliente (linha) desejado, e então com um
+    int next, qtdcompra;                           //contador vai somando a qtd de compras feitas naquela linha.
     Apontador aux;
     Apontadorp pAux;
     aux = lista->principal;

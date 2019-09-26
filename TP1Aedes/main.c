@@ -36,7 +36,7 @@ int main() {
     LeMatriz(ptr_arq, &lista, qtdi, qtdj, &produtos);
     fclose(ptr_arq);
 
-
+    //Interface para utilização interativa.
     do{
         printf("Entre com a operacao desejada:\n");
         printf("*****************************************\n");
