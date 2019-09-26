@@ -4,7 +4,7 @@
 typedef struct celula *Apontadorp;
 
 typedef struct {
-    char datacompra[10];
+    char datacompra[11];
     int qtdproduto;
 }TProdutos;
 
@@ -18,8 +18,7 @@ typedef struct{
     int qtdprod;
 }TLisprod;
 
-int InicializaProd(TLisprod *lisprod);
-int ListaVprod(TLisprod *lisprod);
+void InicializaProd(TLisprod *lisprod);
 int Insere(TLisprod *lisprod, TProdutos *produtos);
 void Imprime(TLisprod *lisprod);
 

@@ -1,13 +1,12 @@
 #include "TAD_Produto.h"
 
-int InicializaProd(TLisprod *lisprod){
+void InicializaProd(TLisprod *lisprod){
     lisprod->Primeiro = (Apontadorp)malloc(sizeof(TCelprod));
     lisprod->Ultimo = lisprod->Primeiro;
     lisprod->Ultimo->prox = NULL;
+    lisprod->qtdprod = 0;
 }
-int ListaVprod(TLisprod *lisprod){
-    return  (lisprod->Primeiro == lisprod->Ultimo);
-}
+
 int Insere(TLisprod *lisprod, TProdutos *produtos){
     lisprod->Ultimo->prox = (Apontadorp)malloc(sizeof(TCelprod));
     lisprod->Ultimo = lisprod->Ultimo->prox;
@@ -22,7 +21,7 @@ void Imprime(TLisprod *lisprod){
     Apontadorp aux;
     aux = lisprod->Primeiro->prox;
     while(aux != NULL){
-        printf("%d %s\n", aux->produtos.qtdproduto, aux->produtos.datacompra);
+        printf("%s %d ", aux->produtos.datacompra, aux->produtos.qtdproduto);
         aux = aux->prox;
     }
 }

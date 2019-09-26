@@ -8,7 +8,6 @@ typedef struct Celula{
     Apontador direita, abaixo;
     int linha, coluna;
     TLisprod lisprod;
-    int valor;
 }TCelula;
 
 typedef struct{
@@ -25,8 +24,8 @@ void ImprimeMatrizC(TLista *lista, int j);
 void ImprimeMatrizL(TLista *lista, int i);
 void ImprimeMatriz(TLista *lista);
 
-int LeMatriz();
-int qtdCompraporProduto(TLista *lista, TLisprod *lisprod, int coluna);
-int qtdCompraporCliente(TLista *lista, TLisprod *lisprod, int linha);
+void LeMatriz(FILE *ptr_arq, TLista *lista, int qtd_i, int qtd_j, TProdutos *produtos);
+int qtdCompraporProduto(TLista *lista, int coluna);
+int qtdCompraporCliente(TLista *lista, int linha);
 
 #endif //TP1AEDES_TAD_MATESPARCA_H

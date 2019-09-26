@@ -4,11 +4,11 @@ int InicializaColuna(TLista *lista, int j) {
     int next;
     aux = lista->principal;
     for (next = 0; next < j; next++){
-    aux->direita = (Apontador) malloc(sizeof(TCelula)); //Direita points to nova celula
-    aux = aux->direita;                       //Ultimo points to nova celula
-    aux->linha = 0;                                   //Valor da coluna é o mesmo de aux
+    aux->direita = (Apontador) malloc(sizeof(TCelula));
+    aux = aux->direita;
+    aux->linha = 0;
     aux->coluna = -1;
-    aux->direita = lista->principal;            //Direita(NC) points to celula principal
+    aux->direita = lista->principal;
     aux->abaixo = aux;
     }
     return 1;
@@ -18,22 +18,22 @@ int InicializaLinha(TLista *lista, int i){
     int next;
     aux = lista->principal;
     for (next = 0; next < i; ++next){
-        aux->abaixo = (Apontador) malloc(sizeof(TCelula)); //Abaixo points to nova celula
-        aux = aux->abaixo;                       //Ultimo points to nova celula
-        aux->linha = -1;                                   //Valor da linha é o mesmo de aux
+        aux->abaixo = (Apontador) malloc(sizeof(TCelula));
+        aux = aux->abaixo;
+        aux->linha = -1;
         aux->coluna = 0;
-        aux->abaixo = lista->principal;             //Abaixo(NC) points to celula principal
+        aux->abaixo = lista->principal;
         aux->direita = aux;
     }
     return 1;
 }
 int InicializaMatriz(TLista *lista){
     //Criação da célula cabeça principal
-    lista->principal = (Apontador) malloc(sizeof(TCelula));   //Inicializa célula cabeça Principal
+    lista->principal = (Apontador) malloc(sizeof(TCelula));
     lista->principal->direita = lista->principal;
     lista->principal->abaixo = lista->principal;
-    lista->principal->linha = -1;                          //Define célula principal (linha -1 por convenção)
-    lista->principal->coluna = -1;                         //Define célula principal (coluna -1 por convenção)
+    lista->principal->linha = -1;
+    lista->principal->coluna = -1;
 
     return 1;
 }
@@ -115,56 +115,93 @@ void ImprimeMatriz(TLista *lista){
     while (aux->coluna != -1){
 
         aux = aux->direita;
-        if(aux->coluna == 1){
-            printf("\nCliente: %d\n",aux->linha);
+        if(aux->coluna != 0){
+            printf("Cliente: %d",aux->linha);
         }
 
         if(aux->linha == -1){
             printf("\n");
             aux = aux->abaixo;
         }else {
-            printf("Produto %d: ",aux->coluna);
+            printf(" Produto: %d\n", aux->coluna);
+            printf("lista:");
             Imprime(&aux->lisprod);
+            printf("\n");
         }
 
     }
 }
 
-int qtdCompraporProduto(TLista *lista, TLisprod *lisprod, int coluna){
+void LeMatriz(FILE *ptr_arq, TLista *lista, int qtd_i, int qtd_j, TProdutos *produtos) {
+    int i, j, qtd;
+    char data[10];
+    char caracter;
+    int checkfunctionC, checkfunctionL;
+
+    //Células cabeça criadas a partir da principal de acordo com o número de linhas e colunas
+    //Linhas
+    checkfunctionC = InicializaColuna(lista, qtd_j);
+    //colunas
+    checkfunctionL = InicializaLinha(lista, qtd_i);
+
+    if (checkfunctionL == 1 && checkfunctionC == 1) {
+        printf("Linha inicializada com sucesso...\n");
+        printf("Coluna inicializada com sucesso...\n");
+        printf("Matriz inicializada com sucesso!\n");
+    } else {
+        printf("Matriz não inicializada\n");
+    }
+    while (!feof(ptr_arq)){
+        fscanf(ptr_arq, "%d %d", &i, &j);
+        caracter = fgetc(ptr_arq);
+        while(caracter != '\n'){
+            fscanf(ptr_arq, "%s %d", data, &qtd);
+            strcpy(produtos->datacompra, data);
+            produtos->qtdproduto = qtd;
+            InsereMatriz(lista, j, i, produtos);
+            caracter = fgetc(ptr_arq);
+            if(feof(ptr_arq)){
+                break;
+            }
+        }
+    }
+}
+
+int qtdCompraporProduto(TLista *lista, int coluna){
     int next, qtdcompra;
     Apontador aux;
     Apontadorp pAux;
-    aux = lista->principal->direita;
     qtdcompra = 0;
+    aux = lista->principal;
     for (next = 0; next < coluna; next++) {
         aux = aux->direita;
     }
-    while(aux->abaixo->linha != 0 && aux->abaixo->coluna == -1){
+    while(aux->abaixo->linha != 0 && aux->abaixo->coluna != -1){
         aux = aux->abaixo;
-        pAux = lisprod->Primeiro;
-        while(pAux != NULL){
+        pAux = aux->lisprod.Primeiro;
+        while (pAux->prox != NULL){
             pAux = pAux->prox;
-            qtdcompra += pAux->produtos.qtdproduto;
+            qtdcompra++;
         }
     }
 
     return qtdcompra;
 }
-int qtdCompraporCliente(TLista *lista, TLisprod *lisprod, int linha){
+int qtdCompraporCliente(TLista *lista, int linha){
     int next, qtdcompra;
     Apontador aux;
     Apontadorp pAux;
-    aux = lista->principal->abaixo;
+    aux = lista->principal;
     qtdcompra = 0;
     for (next = 0; next < linha; next++) {
-        aux = aux->direita;
+        aux = aux->abaixo;
     }
-    while(aux->abaixo->linha != 0 && aux->abaixo->coluna == -1){
+    while(aux->direita->linha != -1 && aux->direita->coluna != 0){
         aux = aux->direita;
-        pAux = lisprod->Primeiro;
-        while(pAux != NULL){
+        pAux = aux->lisprod.Primeiro;
+        while(pAux->prox != NULL){
             pAux = pAux->prox;
-            qtdcompra += pAux->produtos.qtdproduto;
+            qtdcompra++;
         }
     }
 
