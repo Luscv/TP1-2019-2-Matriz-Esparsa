@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/lucbp/CLionProjects/TP1Aedes
+# Install script for directory: C:/Users/vburi/CLionProjects/TP012019-2-lucas3511-vinicius3495-isabella3474/TP1Aedes
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/lucbp/CLionProjects/TP1Aedes/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/vburi/CLionProjects/TP012019-2-lucas3511-vinicius3495-isabella3474/TP1Aedes/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

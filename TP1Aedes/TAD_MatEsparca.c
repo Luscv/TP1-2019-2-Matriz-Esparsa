@@ -130,6 +130,38 @@ void ImprimeMatriz(TLista *lista){
     }
 }
 
+int LeMatriz(FILE *ptr_arq, TLista *lista, int qtd_i, int qtd_j) {
+
+    int i, j, qtd;
+    char data[11];
+    char linha[] = "";
+    char ch[] = " ";
+    int checkfunctionC, checkfunctionL;
+
+    //Células cabeça criadas a partir da principal de acordo com o número de linhas e colunas
+    //Linhas
+    checkfunctionC = InicializaColuna(lista, qtd_j);
+    //colunas
+    checkfunctionL = InicializaLinha(lista, qtd_i);
+
+    if (checkfunctionL == 1 && checkfunctionC == 1) {
+        printf("Linha inicializada com sucesso...\n");
+        printf("Coluna inicializada com sucesso...\n");
+        printf("Matriz incializada com sucesso!\n");
+    } else {
+        printf("Matriz não inicializada\n");
+    }
+
+    while (fgets(linha, 400, ptr_arq) !=
+           NULL) { //Lê o arquivo escolhendo o item da matriz e definindo os valores da lista
+        char *ptr = strtok(linha, " ");
+        while (ptr != NULL) {
+            printf("\n%s", ptr);
+            ptr = strtok(NULL, " ");
+        }
+    }
+}
+
 int qtdCompraporProduto(TLista *lista, TLisprod *lisprod, int coluna){
     int next, qtdcompra;
     Apontador aux;

@@ -25,7 +25,7 @@ void ImprimeMatrizC(TLista *lista, int j);
 void ImprimeMatrizL(TLista *lista, int i);
 void ImprimeMatriz(TLista *lista);
 
-int LeMatriz();
+int LeMatriz(FILE *ptr_arq, TLista *lista, int qtd_i, int qtd_j);
 int qtdCompraporProduto(TLista *lista, TLisprod *lisprod, int coluna);
 int qtdCompraporCliente(TLista *lista, TLisprod *lisprod, int linha);
 
